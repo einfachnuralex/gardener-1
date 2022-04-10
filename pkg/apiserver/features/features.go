@@ -33,5 +33,6 @@ func RegisterFeatureGates() {
 		features.ShootSARotation,
 		features.ShootMaxTokenExpirationOverwrite,
 		features.ShootMaxTokenExpirationValidation,
+		features.ManagedIstio,
 	)))
 }
