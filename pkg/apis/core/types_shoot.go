@@ -528,7 +528,7 @@ type KubeAPIServerConfig struct {
 }
 
 // AccessControl provides authorization mechanisms for Shoot-API-Server.
-// Note: The schema (incl. child structs) and documentation resembles istio's AuthorizationPolicy.
+// Note: The schema (incl. child structs) and documentation resembles istio's AuthorizationPolicy, but is heavily simplified.
 type AccessControl struct {
 	// The action to take on the source of request.
 	Action *AuthorizationAction
