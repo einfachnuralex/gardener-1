@@ -1821,7 +1821,7 @@ var _ = Describe("Shoot Validation Tests", func() {
 
 			Expect(errorList).To(ConsistOf(PointTo(MatchFields(IgnoreExtras, Fields{
 				"Type":  Equal(field.ErrorTypeRequired),
-				"Field": Equal("spec.kubernetes.kubeAPIServer.accessControl.action"),
+				"Field": Equal("spec.kubernetes.kubeAPIServer.accessControl.source"),
 			}))))
 		})
 
@@ -1835,16 +1835,18 @@ var _ = Describe("Shoot Validation Tests", func() {
 
 			Expect(errorList).To(ConsistOf(PointTo(MatchFields(IgnoreExtras, Fields{
 				"Type":  Equal(field.ErrorTypeRequired),
-				"Field": Equal("spec.kubernetes.kubeAPIServer.accessControl.source"),
+				"Field": Equal("spec.kubernetes.kubeAPIServer.accessControl.action"),
 			}))))
 		})
 
 		It("should invalid due to Ip Adress", func() {
 
+			action := core.AuthorizationAction_ALLOW
 			shoot.Spec.Kubernetes.KubeAPIServer.AccessControl = &core.AccessControl{
 				Source: &core.Source{
 					IPBlocks: []string{"foo"},
 				},
+				Action: &action,
 			}
 
 			errorList := ValidateShoot(shoot)
@@ -1857,10 +1859,12 @@ var _ = Describe("Shoot Validation Tests", func() {
 
 		It("should not invalid due to valid Ip Adress", func() {
 
+			action := core.AuthorizationAction_ALLOW
 			shoot.Spec.Kubernetes.KubeAPIServer.AccessControl = &core.AccessControl{
 				Source: &core.Source{
 					IPBlocks: []string{"127.0.0.1"},
 				},
+				Action: &action,
 			}
 
 			errorList := ValidateShoot(shoot)
@@ -1869,7 +1873,12 @@ var _ = Describe("Shoot Validation Tests", func() {
 		})
 
 		It("should fail when using nil access control action", func() {
-			shoot.Spec.Kubernetes.KubeAPIServer.AccessControl.Action = nil
+			shoot.Spec.Kubernetes.KubeAPIServer.AccessControl = &core.AccessControl{
+				Source: &core.Source{
+					IPBlocks: []string{"127.0.0.1"},
+				},
+				Action: nil,
+			}
 			errorList := ValidateShoot(shoot)
 
 			Expect(errorList).To(ConsistOf(PointTo(MatchFields(IgnoreExtras, Fields{
@@ -1880,7 +1889,12 @@ var _ = Describe("Shoot Validation Tests", func() {
 
 		It("should fail when using unknown access control action", func() {
 			m := core.AuthorizationAction("fooMode")
-			shoot.Spec.Kubernetes.KubeAPIServer.AccessControl.Action = &m
+			shoot.Spec.Kubernetes.KubeAPIServer.AccessControl = &core.AccessControl{
+				Action: &m,
+				Source: &core.Source{
+					IPBlocks: []string{"127.0.0.1"},
+				},
+			}
 			errorList := ValidateShoot(shoot)
 			Expect(errorList).To(ConsistOf(PointTo(MatchFields(IgnoreExtras, Fields{
 				"Type":  Equal(field.ErrorTypeNotSupported),
