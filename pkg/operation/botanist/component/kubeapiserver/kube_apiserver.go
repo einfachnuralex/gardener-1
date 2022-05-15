@@ -112,8 +112,6 @@ type Interface interface {
 	SetExternalHostname(string)
 	// SetExternalServer sets the ExternalServer field in the Values of the deployer.
 	SetExternalServer(string)
-	// SetAccessControl sets the AccessControl field in the Values of the deployer.
-	SetAccessControl(*gardencorev1beta1.AccessControl)
 }
 
 // Values contains configuration values for the kube-apiserver resources.
@@ -535,10 +533,6 @@ func (k *kubeAPIServer) SetExternalHostname(hostname string) {
 
 func (k *kubeAPIServer) SetExternalServer(server string) {
 	k.values.ExternalServer = server
-}
-
-func (k *kubeAPIServer) SetAccessControl(accessControl *gardencorev1beta1.AccessControl) {
-	k.values.AccessControl = accessControl
 }
 
 // GetLabels returns the labels for the kube-apiserver.
