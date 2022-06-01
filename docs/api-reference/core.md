@@ -10263,8 +10263,9 @@ SystemComponents
 </em>
 </td>
 <td>
-<p>A list of IP blocks, populated from the source address of the IP packet.
-Single IP (e.g. &ldquo;1.2.3.4&rdquo;) and CIDR (e.g. &ldquo;1.2.3.0/24&rdquo;) are supported</p>
+<em>(Optional)</em>
+<p>A list of IP blocks (Ipv4 &amp; Ipv6), populated from the source address of the IP packet.
+Single IP (e.g. &ldquo;1.2.3.4&rdquo;) and CIDR (e.g. &ldquo;1.2.3.0/24&rdquo;) are supported.</p>
 </td>
 </tr>
 <tr>
@@ -10275,8 +10276,7 @@ Single IP (e.g. &ldquo;1.2.3.4&rdquo;) and CIDR (e.g. &ldquo;1.2.3.0/24&rdquo;) 
 </em>
 </td>
 <td>
-<p>A list of IP blocks, populated from X-Forwarded-For header or proxy protocol.
-Single IP (e.g. &ldquo;1.2.3.4&rdquo;) and CIDR (e.g. &ldquo;1.2.3.0/24&rdquo;) are supported</p>
+<p>A list of remote ip blocks</p>
 </td>
 </tr>
 </tbody>
