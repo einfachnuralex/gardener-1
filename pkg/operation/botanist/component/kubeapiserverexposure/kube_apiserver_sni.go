@@ -201,7 +201,8 @@ func (s *sni) Deploy(ctx context.Context) error {
 							From: []*istioapisecurityv1beta1.Rule_From{
 								&istioapisecurityv1beta1.Rule_From{
 									Source: &istioapisecurityv1beta1.Source{
-										IpBlocks: s.values.AccessControl.Source.IPBlocks,
+										IpBlocks:       s.values.AccessControl.Source.IPBlocks,
+										RemoteIpBlocks: s.values.AccessControl.Source.RemoteIPBlocks,
 									},
 								},
 							},
